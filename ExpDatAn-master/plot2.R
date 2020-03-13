@@ -1,0 +1,12 @@
+nei <- readRDS("summarySCC_PM25.rds")
+b <- nei$fips == "24510"
+balt <- split(nei[b,], as.factor(nei[b,]$year))
+t99 <- sum(balt[["1999"]]$Emissions, na.rm = T)
+t02 <- sum(balt[["2002"]]$Emissions, na.rm = T)
+t05 <- sum(balt[["2005"]]$Emissions, na.rm = T)
+t08 <- sum(balt[["2008"]]$Emissions, na.rm = T)
+tot <- c(t99, t02, t05, t08)
+y <- names(balt)
+plot(y, tot, xlab = "Years", ylab = "Total PM-2.5 Levels in Baltimore", pch = 20)
+dev.copy(png, file = "plot2.png")
+dev.off()
